@@ -19,7 +19,6 @@ function Signup() {
             direction="column"
             alignItems="center"
             justifyContent="center"
-            // align='center'
             sx={{ minHeight: '100vh' }}>
             <Paper elevation={1} style={logincard}>
                 <Grid sx={{ marginBottom: 3 }}><Typography variant='h3' textAlign={'center'}>Sign up</Typography ></Grid>
