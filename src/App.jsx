@@ -7,8 +7,8 @@ import MainTheme from "./Theme/MainTheme"
 
 // Pages :
 import Dashboard from "Pages/Dashboard"
-import Login from 'Pages/Dashboard/auth/Login'
-import Signup from 'Pages/Dashboard/auth/Signup'
+import Login from 'Pages/auth/Login'
+import Signup from 'Pages/auth/Signup'
 
 
 
