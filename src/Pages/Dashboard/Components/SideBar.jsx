@@ -1,7 +1,10 @@
 import React from 'react';
 
 // MUI :
-import { Divider, Drawer as MuiDrawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, styled, IconButton } from '@mui/material';
+import { Divider, Drawer as MuiDrawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, styled, IconButton, Box, Button } from '@mui/material';
+
+// ICONS :
+import Logo from "Assets/logo.png"
 
 
 let drawerWidth = 240;
@@ -29,18 +32,22 @@ const closedMixin = (theme) => ({
 const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     padding: theme.spacing(0, 1),
+    height: "80px",
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
-  }));
+}));
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
     ({ theme, open }) => ({
         width: drawerWidth,
         flexShrink: 0,
         whiteSpace: 'nowrap',
         boxSizing: 'border-box',
-        color:"white",
+        "& .MuiPaper-root": {
+            color: theme.palette.primary.text,
+            backgroundColor: theme.palette.primary.field,
+        },
         ...(open && {
             ...openedMixin(theme),
             '& .MuiDrawer-paper': openedMixin(theme),
@@ -56,14 +63,12 @@ const SideBar = ({ Routes, open = true }) => {
         <>
             <Drawer variant="permanent" open={open}>
                 <DrawerHeader>
-                    <IconButton>
-                        
-                    </IconButton>
+                    <Box component={"img"} src={Logo} sx={{ width: "50px", objectFit: "cover" }} />
                 </DrawerHeader>
                 <Divider />
                 <List>
                     {Routes.map((route, index) => (
-                        <ListItem key={index} disablePadding sx={{ display: 'block' }}>
+                        <ListItem key={index} disablePadding sx={{ display: 'block', ".MuiListItemButton-root": { "&:hover": { backgroundColor: "secondary.field", color: "primary.main" } } }}>
                             <ListItemButton
                                 sx={{
                                     minHeight: 48,
@@ -73,6 +78,7 @@ const SideBar = ({ Routes, open = true }) => {
                             >
                                 <ListItemIcon
                                     sx={{
+                                        color: "inherit",
                                         minWidth: 0,
                                         mr: open ? 3 : 'auto',
                                         justifyContent: 'center',
