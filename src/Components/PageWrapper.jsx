@@ -10,7 +10,7 @@ import PageHeader from './PageHeader'
 const PageWrapper = ({ sx, children }) => {
     return (
         <>
-            <Box sx={{ padding: "1rem" , display:"flex" , gap:"1rem" , flexDirection:"column" , ...sx }}>
+            <Box sx={{ padding: "1rem" , display:"flex" , gap:"2rem" , flexDirection:"column" , ...sx }}>
                 <PageHeader/>
                 {children}
             </Box>
