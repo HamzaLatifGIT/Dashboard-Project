@@ -2,7 +2,7 @@ import { React, useState } from 'react'
 import { Link } from "react-router-dom"
 
 // MUI :
-import { Grid, Paper, TextField, Typography, FormControlLabel, FormControl, Checkbox, Button, InputLabel, OutlinedInput, InputAdornment, IconButton } from "@mui/material"
+import { Grid, Paper, Typography, FormControlLabel, FormControl, Checkbox, Button, OutlinedInput, InputAdornment, IconButton } from "@mui/material"
 
 // ICONS :
 import Visibility from '@mui/icons-material/Visibility';
@@ -14,11 +14,11 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 function Signup() {
 
+
+
     const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
-    const handleClickShowConfirmPassword = () => setShowConfirmPassword((show) => !show);
 
 
     const [emails, setEmail] = useState('')
@@ -32,10 +32,10 @@ function Signup() {
     }
 
     const logincard = {
-        padding: 20, height: '70vh', width: 550, margin: "20px auto"
+        padding: 20, height: '72vh', width: 400, margin: "20px auto"
     }
     const marginBottom = {
-        marginBottom: 20
+        marginBottom: 10
     }
     const btnstyle = {
         margin: '8px 0'
@@ -51,17 +51,24 @@ function Signup() {
                 <Paper elevation={1} style={logincard}>
                     <Grid sx={{ marginBottom: 3 }}><Typography variant='h3' textAlign={'center'}>Sign up</Typography ></Grid>
 
-                    <TextField label="Email" variant="outlined" fullWidth margin="dense" style={marginBottom} onChange={(e) => { setEmail(e.target.value) }} value={emails} />
-                  
-                    <FormControl variant="outlined" fullWidth onChange={(e) => { setPassword(e.target.value) }} value={passwords} style={marginBottom}>
-                        <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-                        <OutlinedInput inputProps={{
-                            autoComplete: 'new-password',
-                            form: {
-                                autoComplete: 'off',
-                            },
-                        }}
-                            id="outlined-adornment-password"
+                    <FormControl fullWidth size='small'>
+                        <Typography sx={{ my: 0.8 }}>Name</Typography>
+                        <OutlinedInput />
+                    </FormControl>
+                    <FormControl sx={{ my: 1 }} size='small' variant="outlined" fullWidth onChange={(e) => { setPassword(e.target.value) }} value={passwords} >
+                        <Typography sx={{ my: 0.8 }}>Email Address</Typography>
+                        <OutlinedInput />
+                    </FormControl>
+                    <FormControl size='small' variant="outlined" fullWidth onChange={(e) => { setPassword(e.target.value) }} value={confirmPasswords} style={marginBottom}>
+                        <Typography sx={{ my: 0.8 }}>Password</Typography>
+                        <OutlinedInput
+                            inputProps={{
+                                autoComplete: 'new-password',
+                                form: {
+                                    autoComplete: 'off',
+                                },
+                            }}
+                            id="outlined-adornment-confirmpassword"
                             type={showPassword ? 'text' : 'password'}
                             endAdornment={
                                 <InputAdornment position="end">
@@ -75,33 +82,7 @@ function Signup() {
                                     </IconButton>
                                 </InputAdornment>
                             }
-                            label="Password"
-                        />
-                    </FormControl>
-                    <FormControl variant="outlined" fullWidth onChange={(e) => { setConfirmPassword(e.target.value) }} value={confirmPasswords} style={marginBottom}>
-                        <InputLabel htmlFor="outlined-adornment-password">Confirm Password</InputLabel>
-                        <OutlinedInput
-                            inputProps={{
-                                autoComplete: 'new-password',
-                                form: {
-                                    autoComplete: 'off',
-                                },
-                            }}
-                            id="outlined-adornment-confirmpassword"
-                            type={showConfirmPassword ? 'text' : 'password'}
-                            endAdornment={
-                                <InputAdornment position="end">
-                                    <IconButton
-                                        aria-label="toggle password visibility"
-                                        onClick={handleClickShowConfirmPassword}
 
-                                        edge="end"
-                                    >
-                                        {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
-                                    </IconButton>
-                                </InputAdornment>
-                            }
-                            label="Confirm Password"
                         />
                     </FormControl>
 
@@ -115,7 +96,7 @@ function Signup() {
                         }
                         label="Agree the terms and policy"
                     /><br />
-                    <Button color='primary' variant="contained" fullWidth style={btnstyle} type='submit'>Sign up</Button>
+                    <Button sx={{ backgroundColor: "primary.field" }} color='primary' variant="contained" fullWidth style={btnstyle} type='submit'>Sign up</Button>
                     <Grid align='center'><Typography>or</Typography> <Typography >
                         <Link to={'/login'} >
                             Login

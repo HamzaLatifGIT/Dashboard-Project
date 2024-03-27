@@ -2,7 +2,7 @@ import { React, useState } from 'react';
 import { Link } from "react-router-dom"
 
 // MUI :
-import { Grid, Paper, TextField, Typography, Button, FormControl, InputLabel, OutlinedInput, InputAdornment, IconButton, Box } from "@mui/material"
+import { Grid, Paper, Typography, Button, FormControl, InputLabel, OutlinedInput, InputAdornment, IconButton, Box } from "@mui/material"
 
 // ICONS :
 import Visibility from '@mui/icons-material/Visibility';
@@ -26,7 +26,7 @@ function Login() {
 
 
     const logincard = {
-        padding: 20, height: '70vh', width: 456, margin: "20px auto"
+        padding: 20, height: '70vh', width: 400, margin: "20px auto"
     }
 
     const btnstyle = {
