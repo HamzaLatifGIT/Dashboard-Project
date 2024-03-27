@@ -2,7 +2,7 @@ import { React, useState } from 'react';
 import { Link } from "react-router-dom"
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { Grid, Paper, TextField, Typography, FormControlLabel, Checkbox, Button, FormControl, InputLabel, OutlinedInput, InputAdornment, IconButton } from "@mui/material"
+import { Grid, Paper, TextField, Typography, Button, FormControl, InputLabel, OutlinedInput, InputAdornment, IconButton, Box } from "@mui/material"
 
 
 
@@ -20,11 +20,9 @@ function Login() {
 
 
     const logincard = {
-        padding: 20, height: '70vh', width: 550, margin: "20px auto"
+        padding: 20, height: '70vh', width: 456, margin: "20px auto"
     }
-    const marginBottom = {
-        marginBottom: 30
-    }
+   
     const btnstyle = {
         margin: '8px 0'
     }
@@ -41,15 +39,20 @@ function Login() {
                 alignItems="center"
                 justifyContent="center"
                 // align='center'
-                sx={{ minHeight: '100vh' }}>
+                sx={{ minHeight: '100vh' }} >
                 <Paper elevation={1} style={logincard}>
                     <Grid sx={{ marginBottom: 5 }}><Typography variant='h3' textAlign={'center'}>Sign In</Typography ></Grid>
-
-                    <TextField InputLabelProps={{ shrink: true }} label="Email" variant="outlined" fullWidth margin="dense" style={marginBottom} onChange={(e) => { setEmail(e.target.value) }} value={emails} type='email' />
-                    {/* <TextField label="Password"  variant="outlined" fullWidth style={marginBottom} onChange={(e) => { setPassword(e.target.value) }} value={passwords} type='password'/> */}
-                    <FormControl variant="outlined" fullWidth onChange={(e) => { setPassword(e.target.value) }} value={passwords} style={marginBottom}>
-                        <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+<Box sx={{marginBottom:1}} >
+    <Typography sx={{my:0.8}}>Username</Typography>
+      <FormControl fullWidth >
+<OutlinedInput size='small'/>
+</FormControl></Box>
+<Box>
+    <Typography sx={{my:0.8}}>Password</Typography>
+<FormControl variant="outlined" fullWidth onChange={(e) => { setPassword(e.target.value) }} value={passwords} >
+                        <InputLabel />
                         <OutlinedInput
+                         size='small'
                             id="outlined-adornment-password"
                             type={showPassword ? 'text' : 'password'}
                             endAdornment={
@@ -64,12 +67,15 @@ function Login() {
                                     </IconButton>
                                 </InputAdornment>
                             }
-                            label="Password"
+                            
                         />
                     </FormControl>
 
+</Box>
+                 
+                  
                     <br />
-                    <Button color='primary' variant="contained" fullWidth style={btnstyle} type='submit' >Login</Button>
+                    <Button sx={{backgroundColor:"primary.field"}} color='primary' variant="contained" fullWidth style={btnstyle} type='submit' >Login</Button>
                     <Typography >
                         <Link href="#" >
                             Forgot password ?
