@@ -12,7 +12,8 @@ const MainTheme = createTheme({
             main: "#5D87FF",
             field: "#405189",
             text: "#fff",
-            grey: "#575757"
+            grey: "#575757",
+            shadow:"#808080a8"
         },
         secondary: {
             main: "#49BEFF",
@@ -20,6 +21,20 @@ const MainTheme = createTheme({
             // field: "#ebf3fe",
             text: "#5a6a85"
         },
+    },
+    components: {
+        MuiTypography: {
+            styleOverrides: {
+                root: ({ theme, ownerState }) => ({
+                    ...(ownerState.type == "heading" && {
+                        fontSize: "1.3rem",
+                        color: theme.palette.secondary.text,
+                        fontWeight:"bold"
+
+                    })
+                })
+            }
+        }
     }
 })
 
