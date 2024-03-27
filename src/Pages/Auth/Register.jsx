@@ -1,8 +1,15 @@
 import { React, useState } from 'react'
 import { Link } from "react-router-dom"
+
+// MUI :
+import { Grid, Paper, TextField, Typography, FormControlLabel, FormControl, Checkbox, Button, InputLabel, OutlinedInput, InputAdornment, IconButton } from "@mui/material"
+
+// ICONS :
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { Grid, Paper, TextField, Typography, FormControlLabel, FormControl, Checkbox, Button, InputLabel, OutlinedInput, InputAdornment, IconButton } from "@mui/material"
+
+
+
 
 
 function Signup() {
