@@ -13,12 +13,12 @@ import GenrateImage from 'Utils/GenrateImage';
 
 
 
-const NavBar = () => {
+const NavBar = ({ toggleDrawer }) => {
     return (
         <>
             <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0rem 1rem", width: "100%", minHeight: "80px", height: "80x" }}>
                 <Box sx={{ display: "flex", gap: "1rem" }}>
-                    <IconButton sx={{ fontSize: "2rem", height: "fit-content", minWidth: "45px", boxSizing: "border-box" }}> <LuMenu /> </IconButton>
+                    <IconButton sx={{ fontSize: "2rem", height: "fit-content", minWidth: "45px", boxSizing: "border-box" }} onClick={toggleDrawer}> <LuMenu /> </IconButton>
                     <Typography sx={{ fontSize: ".8rem", fontWeight: "600", color: "primary.grey", marginTop: ".3rem" }}> <p style={{ letterSpacing: "5px", lineHeight: ".7rem" }}> Welcome </p> <p style={{ fontWeight: "bolder", fontSize: "1.3rem" }}> Jhone Doe </p> </Typography>
                 </Box>
                 <Box>

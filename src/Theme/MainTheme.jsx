@@ -13,7 +13,7 @@ const MainTheme = createTheme({
             field: "#405189",
             text: "#fff",
             grey: "#575757",
-            shadow:"#808080a8"
+            shadow: "#808080a8"
         },
         secondary: {
             main: "#49BEFF",
@@ -29,12 +29,22 @@ const MainTheme = createTheme({
                     ...(ownerState.type == "heading" && {
                         fontSize: "1.3rem",
                         color: theme.palette.secondary.text,
-                        fontWeight:"bold"
+                        fontWeight: "bold"
 
                     })
                 })
             }
-        }
+        },
+        MuiButton: {
+            styleOverrides: {
+                root: ({ theme, ownerState }) => ({
+                    ...(ownerState.variant == "contained" && {
+                        backgroundColor: theme.palette.primary.field
+
+                    })
+                })
+            }
+        },
     }
 })
 

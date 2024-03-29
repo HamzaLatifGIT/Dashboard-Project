@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router';
 
 // MUI :
 import { Divider, Drawer as MuiDrawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, styled, IconButton, Box, Button } from '@mui/material';
@@ -59,6 +60,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
 );
 const SideBar = ({ Routes, open = true }) => {
+    let Navigate = useNavigate();
+
     return (
         <>
             <Drawer variant="permanent" open={open}>
@@ -68,7 +71,7 @@ const SideBar = ({ Routes, open = true }) => {
                 <Divider />
                 <List>
                     {Routes.map((route, index) => (
-                        <ListItem key={index} disablePadding sx={{ display: 'block', ".MuiListItemButton-root": { "&:hover": { backgroundColor: "secondary.field", color: "primary.main" } } }}>
+                        <ListItem key={index} disablePadding sx={{ display: 'block', ".MuiListItemButton-root": { "&:hover": { backgroundColor: "secondary.field", color: "primary.main" } } }} onClick={()=> Navigate(route.path)}>
                             <ListItemButton
                                 sx={{
                                     minHeight: 48,

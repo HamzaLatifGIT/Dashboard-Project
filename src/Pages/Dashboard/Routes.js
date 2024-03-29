@@ -16,8 +16,8 @@ import { FaHospitalUser, FaCircleDollarToSlot } from "react-icons/fa6";
 
 let Routes = [
     { label: "Dashboard", path: "/", icon: MdDashboard, element: DashboardHome },
-    { label: "Sellers", path: "/sellers", icon: FaHospitalUser, element: Sellers },
-    { label: "Customers", path: "/customers", icon: FaCircleDollarToSlot, element: Customers },
+    { label: "Sellers", path: "sellers", icon: FaHospitalUser, element: Sellers },
+    { label: "Customers", path: "customers", icon: FaCircleDollarToSlot, element: Customers },
 ];
 
 
