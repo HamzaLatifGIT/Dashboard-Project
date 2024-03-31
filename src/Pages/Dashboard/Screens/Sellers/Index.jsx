@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 // MUI :
 import { Box, IconButton, Typography, TextField, Button } from '@mui/material';
@@ -22,6 +23,7 @@ import AddSellerForm from './AddSellerForm';
 const Index = () => {
 
   const columnHelper = createColumnHelper();
+  const Navigate = useNavigate();
 
   const [allClients, setAllClients] = useState([])
   const [clientsLoading, setClientsLoading] = useState(false)
@@ -136,8 +138,8 @@ const Index = () => {
     <>
       <PageWrapper>
         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "end" }}>
-          {/* <Button variant='contained'> Add New Seller </Button> */}
-          <Modal name="Add New Seller"> <AddSellerForm />  </Modal>
+          <Button variant='contained' onClick={() => Navigate("add")}> Add New Seller </Button>
+          {/* <Modal name="Add New Seller"> <AddSellerForm />  </Modal> */}
         </Box>
         <Table
           isSerial={true}

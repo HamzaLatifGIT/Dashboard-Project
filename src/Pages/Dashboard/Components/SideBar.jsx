@@ -70,7 +70,7 @@ const SideBar = ({ Routes, open = true }) => {
                 </DrawerHeader>
                 <Divider />
                 <List>
-                    {Routes.map((route, index) => (
+                    {Routes.map((route, index) => route?.hide != true && (
                         <ListItem key={index} disablePadding sx={{ display: 'block', ".MuiListItemButton-root": { "&:hover": { backgroundColor: "secondary.field", color: "primary.main" } } }} onClick={()=> Navigate(route.path)}>
                             <ListItemButton
                                 sx={{
