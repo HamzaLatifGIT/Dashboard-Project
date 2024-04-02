@@ -32,7 +32,7 @@ const CustomInput = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-const InputField = ({ name, label, hadleChange, }) => {
+const InputField = ({ name, label, value, hadleChange, }) => {
     return (
         <>
             <Box>
@@ -40,7 +40,7 @@ const InputField = ({ name, label, hadleChange, }) => {
                     <InputLabel shrink htmlFor="custome-input" sx={{ fontSize: "1.2rem", fontWeight: 500 }}>
                         {label ?? ""} :
                     </InputLabel>
-                    <CustomInput defaultValue="react-bootstrap" id="custome-input" onChange={hadleChange} />
+                    <CustomInput id="custome-input" value={value} onChange={hadleChange} />
                 </FormControl>
             </Box>
         </>
