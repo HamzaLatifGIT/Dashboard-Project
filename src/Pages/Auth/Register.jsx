@@ -6,10 +6,12 @@ import { Grid, Paper, Typography, FormControlLabel, FormControl, Checkbox, Butto
 
 // Components :
 import InputField from "Components/InputField"
+import PasswordField from 'Components/PasswordField'
 
 // ICONS :
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { Password } from '@mui/icons-material';
 
 
 
@@ -27,7 +29,7 @@ function Signup() {
 
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => setShowPassword((show) => !show);
-    const enteringFormData = (event) => {
+    const enteringFormData= (event) => {
         let { name, value } = event.target;
 
         setFormData({
@@ -48,42 +50,14 @@ function Signup() {
                 direction="column"
                 alignItems="center"
                 justifyContent="center"
-                sx={{ minHeight: '100vh'}}>
-                <Paper elevation={1} sx={{ height: '72vh', width: 400, margin: "20px auto" }}>
-                    <Grid sx={{ marginBottom: 3 }}><Typography variant='h3' textAlign={'center'}>Sign up</Typography ></Grid>
-                    <InputField name={"firstName"} label={"First Name"} value={formData.firstName} hadleChange={enteringFormData} />
-                    <InputField name={"lastName"} label={"Last Name"} value={formData.lastName} hadleChange={enteringFormData} />
-                    <InputField name={"email"} label={"Email"} value={formData.email} hadleChange={enteringFormData} />
-                    <FormControl size='small' variant="outlined" fullWidth sx={{ marginBottom: 10 }}>
-                        <Typography sx={{ my: 0.8 }}>Password</Typography>
-                        <OutlinedInput
-                            inputProps={{
-                                autoComplete: 'new-password',
-                                form: {
-                                    autoComplete: 'off',
-                                },
-                            }}
-                            name='password'
-                            onChange={enteringFormData}
-                            value={formData.password}
-                            id="outlined-adornment-confirmpassword"
-                            type={showPassword ? 'text' : 'password'}
-                            endAdornment={
-                                <InputAdornment position="end">
-                                    <IconButton
-                                        aria-label="toggle password visibility"
-                                        onClick={handleClickShowPassword}
-
-                                        edge="end"
-                                    >
-                                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                                    </IconButton>
-                                </InputAdornment>
-                            }
-
-                        />
-                    </FormControl>
-
+                // align='center'
+                sx={{ minHeight: '100vh', backgroundColor: "secondary.field" }}>
+                <Paper elevation={1}  sx={{ padding: 5,display:'flex',flexDirection:'column',gap:1,  width: 400, margin: "20px auto", borderRadius: "8px", boxShadow: (theme) => `0px 0px 15px ${theme.palette.primary.shadow}` }}>
+                    <Grid  sx={{ marginBottom: 3 }}><Typography variant='h3' textAlign={'center'}>Sign up</Typography ></Grid>
+                    <InputField name={"firstName"} label={"First Name"} value={formData.firstName} onChange={enteringFormData} />
+                    <InputField name={"lastName"} label={"Last Name"} value={formData.lastName} onChange={enteringFormData} />
+                    <InputField name={"email"} label={"Email"} value={formData.email} onChange={enteringFormData} />
+                    <PasswordField name={"password"} value={formData.password} label={"Password"}  onChange={enteringFormData} />
                     <FormControlLabel
                         control={
                             <Checkbox

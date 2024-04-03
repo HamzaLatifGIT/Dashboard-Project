@@ -32,7 +32,7 @@ const CustomInput = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-const InputField = ({ name, label, value, hadleChange, }) => {
+const InputField = ({ name, label, value, onChange, }) => {
     return (
         <>
             <Box>
@@ -40,7 +40,7 @@ const InputField = ({ name, label, value, hadleChange, }) => {
                     <InputLabel shrink htmlFor="custome-input" sx={{ fontSize: "1.2rem", fontWeight: 500 }}>
                         {label ?? ""} :
                     </InputLabel>
-                    <CustomInput id="custome-input" value={value} onChange={hadleChange} />
+                    <CustomInput id="custome-input" name={name} value={value} onChange={onChange} />
                 </FormControl>
             </Box>
         </>

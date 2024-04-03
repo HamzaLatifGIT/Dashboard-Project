@@ -15,7 +15,7 @@ import { LoginAPI } from 'API/Auth';
 import { toast } from 'react-toastify';
 import LoadingButton from 'Components/LoadingButton';
 import InputField from 'Components/InputField';
-
+import PasswordField from 'Components/PasswordField';
 
 
 
@@ -68,34 +68,13 @@ function Login() {
                         {/* <FormControl fullWidth >
                             <OutlinedInput size='small' value={formData.email} onChange={handleChange} name='email' />
                         </FormControl> */}
-                        <InputField name={"email"} label={"Email"} value={formData.email} handleChange={handleChange} />
+                        <InputField name={"email"} label={"Email"} value={formData.email} onChange={handleChange} />
                     </Box>
-                    <Box>
-                        <Typography sx={{ my: 0.8 }}>Password</Typography>
-                        <FormControl variant="outlined" fullWidth  >
-                            <InputLabel />
-                            <OutlinedInput
-                                size='small'
-                                id="outlined-adornment-password"
-                                type={showPassword ? 'text' : 'password'}
-                                value={formData.password}
-                                name='password'
-                                onChange={handleChange}
-                                endAdornment={
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            aria-label="toggle password visibility"
-                                            onClick={handleClickShowPassword}
+              
 
-                                            edge="end"
-                                        >
-                                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                                        </IconButton>
-                                    </InputAdornment>
-                                }
-                            />
-                        </FormControl>
-                    </Box>
+                    <PasswordField name={"password"} value={formData.password} label={"Password"} onChange={handleChange}   />
+
+
                     <br />
                     <LoadingButton label={"LogIn"} loading={loading} type="submit" />
                     {/* <Typography >
