@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
 // MUI :
@@ -15,6 +15,8 @@ import Modal from 'Components/Modal';
 // Helpers :
 import { createColumnHelper } from "@tanstack/react-table";
 import AddSellerForm from './AddBuyerForm';
+import { GetUserAPI } from 'API/User';
+import { toast } from 'react-toastify';
 
 
 
@@ -25,18 +27,20 @@ const Index = () => {
   const columnHelper = createColumnHelper();
   const Navigate = useNavigate();
 
-  const [allClients, setAllClients] = useState([])
-  const [clientsLoading, setClientsLoading] = useState(false)
+  const [allCustomers, setAllCustomers] = useState([])
+  const [loading, setLoading] = useState(false)
   const [selectedPage, setSelectedPage] = useState(1)
 
   const columns = [
-    columnHelper.accessor("first_name", {
+    columnHelper.accessor("firstName", {
       header: "Name",
       cell: (info) => (
+
         <Box sx={{ display: "flex", flexFlow: "column" }}>
+          {console.log(info)}
           <Typography
             fontSize={"14px"}
-            sx={{ fontWeight: "500", color: "primary.text" }}
+            sx={{ fontWeight: "500", color: "secondary.text" }}
           >
             {info.row.original.firstName + " " + info.row.original.lastName}
           </Typography>
@@ -48,7 +52,7 @@ const Index = () => {
       cell: (info) => (
         <Typography
           fontSize={"14px"}
-          sx={{ fontWeight: "500", color: "primary.text" }}
+          sx={{ fontWeight: "500", color: "secondary.text" }}
         >
           {info.row.original.email}
         </Typography>
@@ -73,7 +77,7 @@ const Index = () => {
           >
             <Typography
               fontSize={"14px"}
-              sx={{ fontWeight: "500", color: "primary.text" }}
+              sx={{ fontWeight: "500", color: "secondary.text" }}
             >
               {info.row.original.address}
             </Typography>
@@ -84,27 +88,13 @@ const Index = () => {
     columnHelper.accessor("sales", {
       header: "Total Sales",
       cell: (info) => (
-        <Box sx={{ display: "flex" }}>
-          {/* <Box
-                sx={{ height: "30px", borderRadius: "5px", mr: 1 }}
-                component="img"
-                src={getImage(info.row.original.company_logo, "sm")}
-                alt={info.row.original.address}
-              /> */}
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <Typography
+            fontSize={"14px"}
+            sx={{ fontWeight: "500", color: "secondary.text" }}
           >
-            <Typography
-              fontSize={"14px"}
-              sx={{ fontWeight: "500", color: "primary.text" }}
-            >
-              {info.row.original.purchases}
-            </Typography>
-          </Box>
+            {info.row.original?.sales || 0}
+          </Typography>
         </Box>
       ),
     }),
@@ -134,6 +124,22 @@ const Index = () => {
     }),
   ];
 
+
+  const gettingSellers = async () => {
+    setLoading(true)
+    let res = await GetUserAPI("buyer")
+    if (res.error != null) {
+      toast.error(res?.error)
+    } else {
+      toast.success(res.data?.message)
+      setAllCustomers(res.data?.result)
+    }
+    setLoading(false)
+  }
+  useEffect(() => {
+    gettingSellers()
+  }, [])
+
   return (
     <>
       <PageWrapper>
@@ -143,10 +149,10 @@ const Index = () => {
         </Box>
         <Table
           isSerial={true}
-          data={allClients}
+          data={allCustomers}
           columns={columns}
           isPaginate
-          loading={clientsLoading}
+          loading={loading}
           // pagination={pagination}
           selectedPage={selectedPage}
           setSelectedPage={setSelectedPage}

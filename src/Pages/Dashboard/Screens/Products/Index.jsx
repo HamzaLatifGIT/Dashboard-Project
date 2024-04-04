@@ -12,12 +12,11 @@ import PageWrapper from 'Components/PageWrapper'
 import Table from 'Components/Table'
 import Modal from 'Components/Modal';
 
-// APIs :
-import { CreateUserAPI, GetUserAPI } from 'API/User';
 // Helpers :
 import { createColumnHelper } from "@tanstack/react-table";
+import AddSellerForm from './AddProductForm';
+import { GetUserAPI } from 'API/User';
 import { toast } from 'react-toastify';
-
 
 
 
@@ -28,13 +27,13 @@ const Index = () => {
   const columnHelper = createColumnHelper();
   const Navigate = useNavigate();
 
-  const [allSellers, setAllSellers] = useState([])
+  const [allProducts, setAllProducts] = useState([])
   const [loading, setLoading] = useState(false)
   const [selectedPage, setSelectedPage] = useState(1)
 
   const columns = [
-    columnHelper.accessor("firstName", {
-      header: "Name",
+    columnHelper.accessor("title", {
+      header: "Title",
       cell: (info) => (
 
         <Box sx={{ display: "flex", flexFlow: "column" }}>
@@ -43,24 +42,24 @@ const Index = () => {
             fontSize={"14px"}
             sx={{ fontWeight: "500", color: "secondary.text" }}
           >
-            {info.row.original.firstName + " " + info.row.original.lastName}
+            {info.row.original.title}
           </Typography>
         </Box>
       ),
     }),
-    columnHelper.accessor("email", {
-      header: "Email",
+    columnHelper.accessor("category", {
+      header: "Category",
       cell: (info) => (
         <Typography
           fontSize={"14px"}
           sx={{ fontWeight: "500", color: "secondary.text" }}
         >
-          {info.row.original.email}
+          {info.row.original.category}
         </Typography>
       ),
     }),
-    columnHelper.accessor("address", {
-      header: "Adress",
+    columnHelper.accessor("purchases", {
+      header: "Total Purchases",
       cell: (info) => (
         <Box sx={{ display: "flex" }}>
           {/* <Box
@@ -80,21 +79,48 @@ const Index = () => {
               fontSize={"14px"}
               sx={{ fontWeight: "500", color: "secondary.text" }}
             >
-              {info.row.original.address}
+              {info.row.original?.purchases || 0}
             </Typography>
           </Box>
         </Box>
       ),
     }),
-    columnHelper.accessor("purchases", {
-      header: "Total Purchases",
+    columnHelper.accessor("sales", {
+      header: "Total Sales",
+      cell: (info) => (
+        <Box sx={{ display: "flex" }}>
+          {/* <Box
+                sx={{ height: "30px", borderRadius: "5px", mr: 1 }}
+                component="img"
+                src={getImage(info.row.original.company_logo, "sm")}
+                alt={info.row.original.address}
+              /> */}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Typography
+              fontSize={"14px"}
+              sx={{ fontWeight: "500", color: "secondary.text" }}
+            >
+              {info.row.original?.sales || 0}
+            </Typography>
+          </Box>
+        </Box>
+      ),
+    }),
+    columnHelper.accessor("quantity", {
+      header: "Available Quantity",
       cell: (info) => (
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <Typography
             fontSize={"14px"}
             sx={{ fontWeight: "500", color: "secondary.text" }}
           >
-            {info.row.original?.purchases || 0}
+            {info.row.original?.quantity || 0}
           </Typography>
         </Box>
       ),
@@ -125,31 +151,32 @@ const Index = () => {
     }),
   ];
 
-  const gettingCustomers = async () => {
+
+  const gettingProducts = async () => {
     setLoading(true)
-    let res = await GetUserAPI("seller")
+    let res = await GetUserAPI()
     if (res.error != null) {
       toast.error(res?.error)
     } else {
       toast.success(res.data?.message)
-      setAllSellers(res.data?.result)
+      setAllProducts(res.data?.result)
     }
     setLoading(false)
   }
   useEffect(() => {
-    gettingCustomers()
+    gettingProducts()
   }, [])
 
   return (
     <>
       <PageWrapper>
         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "end" }}>
-          <Button variant='contained' onClick={() => Navigate("add")}> Add New Seller </Button>
+          <Button variant='contained' onClick={() => Navigate("add")}> Add New Customer </Button>
           {/* <Modal name="Add New Seller"> <AddSellerForm />  </Modal> */}
         </Box>
         <Table
           isSerial={true}
-          data={allSellers}
+          data={allProducts}
           columns={columns}
           isPaginate
           loading={loading}

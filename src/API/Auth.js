@@ -29,6 +29,28 @@ const LoginAPI = async ({ email, password }) => {
     }
     return resolved;
 }
+const RegisterAPI = async (data) => {
+    let resolved = {
+        error: null,
+        data: null
+    }
+
+    try {
+        let res = await axios({
+            url: "/auth/register",
+            method: "POST",
+            data
+        })
+        resolved.data = res.data
+    } catch (err) {
+        if (err && err.response && err?.response?.data?.message) {
+            resolved.error = err.response.data.message
+        } else {
+            resolved.error = "Something went Wrong"
+        }
+    }
+    return resolved;
+}
 
 const ValidateEmailAPI = async ({ firstName, lastName, email, phone, type, password, password_confirmation }) => {
     let resolved = {
@@ -202,7 +224,7 @@ const ResetPasswordAPI = async ({ email, otpCode, password }) => {
             method: "POST",
             data: {
                 email: email,
-                code:otpCode,
+                code: otpCode,
                 password,
             }
         })
@@ -217,4 +239,4 @@ const ResetPasswordAPI = async ({ email, otpCode, password }) => {
     return resolved;
 }
 
-export { LoginAPI, ValidateEmailAPI, GenrateEmailOtpAPI, VerifyEmailOtpAPI, ChangeAndVerifyEmailAPI, CreatePasswordAPI, GenrateOTPForgetPasswordAPI, ResetPasswordAPI }
+export { LoginAPI, RegisterAPI, ValidateEmailAPI, GenrateEmailOtpAPI, VerifyEmailOtpAPI, ChangeAndVerifyEmailAPI, CreatePasswordAPI, GenrateOTPForgetPasswordAPI, ResetPasswordAPI }

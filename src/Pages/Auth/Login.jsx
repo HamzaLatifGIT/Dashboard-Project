@@ -1,5 +1,5 @@
 import { React, useState } from 'react';
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 // MUI :
 import { Grid, Paper, Typography, Button, FormControl, InputLabel, OutlinedInput, InputAdornment, IconButton, Box } from "@mui/material"
@@ -21,6 +21,7 @@ import PasswordField from 'Components/PasswordField';
 
 
 function Login() {
+    let Navigate = useNavigate()
 
     const [formData, setFormData] = useState({
         email: "",
@@ -47,6 +48,9 @@ function Login() {
             toast.error(res.error)
         } else {
             toast.success(res.data.message)
+            let UserData = res.data?.result
+            localStorage.setItem("crmToken" , UserData?.token)
+            Navigate("/dashboard")
         }
 
         setloading(false)

@@ -18,8 +18,8 @@ const MainTheme = createTheme({
         secondary: {
             main: "#49BEFF",
             field: "#5d87ff1a",
-            // field: "#ebf3fe",
-            text: "#5a6a85"
+            text: "#5a6a85",
+            shadow: "#F3F6F9"
         },
     },
     components: {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 
 // MUI :
 import { ThemeProvider } from '@mui/material'
@@ -41,6 +41,7 @@ const App = () => {
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='dashboard/*' element={<Dashboard />} />
+          <Route path='*' element={<Navigate to="/dashboard" replace />} />
         </Routes>
       </ThemeProvider>
     </>

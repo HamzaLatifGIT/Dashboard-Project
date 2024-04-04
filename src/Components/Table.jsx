@@ -42,7 +42,7 @@ function GlobalTable({
         columnHelper.accessor((row, rowIndex) => rowIndex + 1, {
             id: "serialNumber",
             header: "Sr #",
-            cell: (info) => info.getValue(),
+            cell: (info) => <Typography sx={{color:"secondary.text"}}> {info.getValue()}</Typography>,
         }),
     ];
 
