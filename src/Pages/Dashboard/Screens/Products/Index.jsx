@@ -172,7 +172,6 @@ const Index = () => {
       <PageWrapper>
         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "end" }}>
           <Button variant='contained' onClick={() => Navigate("add")}> Add New Customer </Button>
-          {/* <Modal name="Add New Seller"> <AddSellerForm />  </Modal> */}
         </Box>
         <Table
           isSerial={true}

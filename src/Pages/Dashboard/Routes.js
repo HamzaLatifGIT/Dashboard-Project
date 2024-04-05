@@ -27,7 +27,7 @@ let Routes = [
     { label: "Customers", path: "customers", icon: FaCircleDollarToSlot, element: Customers },
     { label: "Add/Edit Buyers", path: "customers/add", icon: FaHospitalUser, element: AddBuyerForm, hide: true },
     { label: "Products", path: "products", icon: MdOutlineProductionQuantityLimits, element: Products },
-    { label: "Add/Edit Product", path: "products/add", icon: MdOutlineProductionQuantityLimits, element: AddProductForm, hide: true },
+    // { label: "Add/Edit Product", path: "products/add", icon: MdOutlineProductionQuantityLimits, element: AddProductForm, hide: true },
 
 
 ];
