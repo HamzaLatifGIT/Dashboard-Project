@@ -21,7 +21,7 @@ const PageHeader = () => {
                     Routes.map((value, index) => {
                         return (
                             <>
-                                {index != 0 && <Typography sx={{ fontSize: "inherit", fontWeight: "inherit", color: "inherit" }}> <FaAngleRight /> </Typography>}
+                                {index != 0 && <Typography sx={{ fontSize: "inherit", fontWeight: "inherit", color: "inherit", display: "flex" }}> <FaAngleRight /> </Typography>}
                                 <Typography sx={{ fontSize: "inherit", fontWeight: "inherit", color: "inherit" }}> {value[0]?.toLocaleUpperCase() + value?.slice(1)} </Typography>
                             </>
                         )

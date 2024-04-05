@@ -1,5 +1,5 @@
 import { React, useState } from 'react';
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 // MUI :
 import { Grid, Paper, Typography, Button, FormControl, InputLabel, OutlinedInput, InputAdornment, IconButton, Box } from "@mui/material"
@@ -8,35 +8,54 @@ import { Grid, Paper, Typography, Button, FormControl, InputLabel, OutlinedInput
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
+// API :
+import { LoginAPI } from 'API/Auth';
+
+// Helper :
+import { toast } from 'react-toastify';
+import LoadingButton from 'Components/LoadingButton';
+import InputField from 'Components/InputField';
+import PasswordField from 'Components/PasswordField';
 
 
 
 
 function Login() {
+    let Navigate = useNavigate()
+
+    const [formData, setFormData] = useState({
+        email: "",
+        password: ""
+    })
     const [showPassword, setShowPassword] = useState(false);
+    const [loading, setloading] = useState(false)
+
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-
-
-
-    const [emails, setEmail] = useState('')
-    const [passwords, setPassword] = useState('')
-
-
-
-    const logincard = {
-        padding: 20, height: '70vh', width: 400, margin: "20px auto"
+    const handleChange = (event) => {
+        let { name, value } = event.target;
+        setFormData({
+            ...formData,
+            [name]: value
+        })
     }
 
-    const btnstyle = {
-        margin: '8px 0'
-    }
-
-    const LoginHnadler = (e) => {
+    const LoginHnadler = async (e) => {
         e.preventDefault();
-        console.warn(emails, passwords)
+        setloading(true)
+        let res = await LoginAPI(formData)
+        if (res.error != null) {
+            toast.error(res.error)
+        } else {
+            toast.success(res.data.message)
+            let UserData = res.data?.result
+            localStorage.setItem("crmToken" , UserData?.token)
+            Navigate("/dashboard")
+        }
+
+        setloading(false)
     }
+
     return (
         <form onSubmit={LoginHnadler}>
             <Grid container
@@ -45,48 +64,28 @@ function Login() {
                 alignItems="center"
                 justifyContent="center"
                 // align='center'
-                sx={{ minHeight: '100vh' }} >
-                <Paper elevation={1} style={logincard}>
+                sx={{ minHeight: '100vh', backgroundColor: "secondary.field" }} >
+                <Paper elevation={1} sx={{ padding: 5, height: '70vh', width: 400, margin: "20px auto", borderRadius: "8px", boxShadow: (theme) => `0px 0px 15px ${theme.palette.primary.shadow}` }}>
                     <Grid sx={{ marginBottom: 5 }}><Typography variant='h3' textAlign={'center'}>Sign In</Typography ></Grid>
                     <Box sx={{ marginBottom: 1 }} >
-                        <Typography sx={{ my: 0.8 }}>Username</Typography>
-                        <FormControl fullWidth >
-                            <OutlinedInput size='small' />
-                        </FormControl></Box>
-                    <Box>
-                        <Typography sx={{ my: 0.8 }}>Password</Typography>
-                        <FormControl variant="outlined" fullWidth onChange={(e) => { setPassword(e.target.value) }} value={passwords} >
-                            <InputLabel />
-                            <OutlinedInput
-                                size='small'
-                                id="outlined-adornment-password"
-                                type={showPassword ? 'text' : 'password'}
-                                endAdornment={
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            aria-label="toggle password visibility"
-                                            onClick={handleClickShowPassword}
-
-                                            edge="end"
-                                        >
-                                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                                        </IconButton>
-                                    </InputAdornment>
-                                }
-
-                            />
-                        </FormControl>
-
+                        {/* <Typography sx={{ my: 0.8 }}>Username</Typography> */}
+                        {/* <FormControl fullWidth >
+                            <OutlinedInput size='small' value={formData.email} onChange={handleChange} name='email' />
+                        </FormControl> */}
+                        <InputField name={"email"} label={"Email"} value={formData.email} onChange={handleChange} />
                     </Box>
+              
+
+                    <PasswordField name={"password"} value={formData.password} label={"Password"} onChange={handleChange}   />
 
 
                     <br />
-                    <Button sx={{ backgroundColor: "primary.field" }} color='primary' variant="contained" fullWidth style={btnstyle} type='submit' >Login</Button>
-                    <Typography >
+                    <LoadingButton label={"LogIn"} loading={loading} type="submit" />
+                    {/* <Typography >
                         <Link href="#" >
                             Forgot password ?
                         </Link>
-                    </Typography>
+                    </Typography> */}
                     <Typography > Do you have an account ?
                         <Link to="/signup" >
                             Sign Up

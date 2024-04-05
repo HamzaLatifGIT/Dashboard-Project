@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate , useLocation } from 'react-router';
 
 // MUI :
 import { Divider, Drawer as MuiDrawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, styled, IconButton, Box, Button } from '@mui/material';
@@ -59,6 +60,13 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
 );
 const SideBar = ({ Routes, open = true }) => {
+    let Navigate = useNavigate();
+    const Location = useLocation();
+
+
+    let SelectedRoute = Location.pathname.split("/dashboard")[1] ? Location.pathname.split("/dashboard")[1]?.slice(1) : "/"
+
+
     return (
         <>
             <Drawer variant="permanent" open={open}>
@@ -67,8 +75,8 @@ const SideBar = ({ Routes, open = true }) => {
                 </DrawerHeader>
                 <Divider />
                 <List>
-                    {Routes.map((route, index) => (
-                        <ListItem key={index} disablePadding sx={{ display: 'block', ".MuiListItemButton-root": { "&:hover": { backgroundColor: "secondary.field", color: "primary.main" } } }}>
+                    {Routes.map((route, index) => route?.hide != true && (
+                        <ListItem key={index} disablePadding sx={{ display: 'block', ".MuiListItemButton-root": { "&:hover": { backgroundColor: "secondary.field", color: "primary.main" }, ...(SelectedRoute?.includes(route.path) ? { backgroundColor: "secondary.field", color: "primary.main" } : {}) } }} onClick={() => Navigate(route.path)}>
                             <ListItemButton
                                 sx={{
                                     minHeight: 48,
