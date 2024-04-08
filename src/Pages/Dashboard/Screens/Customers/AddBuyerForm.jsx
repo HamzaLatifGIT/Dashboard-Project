@@ -10,6 +10,7 @@ import PageWrapper from 'Components/PageWrapper'
 import UploadField from 'Components/UploadField'
 import LoadingButton from 'Components/LoadingButton'
 import PasswordField from 'Components/PasswordField'
+import SelectField from 'Components/SelectField'
 
 // APIs :
 import { CreateUserAPI } from 'API/User'
@@ -87,6 +88,10 @@ const AddBuyerForm = () => {
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <InputField name={"address"} label={"Address"} value={formData.address} onChange={enteringData} />
+                    </Grid>
+
+                    <Grid item xs={12} sm={6}>
+                        <SelectField name={"address"} label={"Select"} value={formData.Select} onChange={enteringData} />
                     </Grid>
                     <Grid item xs={12} sm={12} sx={{ display: "fex", justifyContent: "center" }} >
                         <LoadingButton loading={loading} label={"Save"} type="submit" />
