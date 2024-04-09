@@ -6,6 +6,8 @@ import { Box, IconButton, Typography, TextField, Button } from '@mui/material';
 
 // ICONS :
 import { MdEdit, MdDelete } from "react-icons/md";
+import { FaEye } from "react-icons/fa";
+
 
 // Compunents :
 import PageWrapper from 'Components/PageWrapper'
@@ -103,6 +105,16 @@ const Index = () => {
       header: "Actions",
       cell: ({ row }) => (
         <Box sx={{ display: "flex", gap: ".5rem" }}>
+          <IconButton
+            onClick={(e) => {
+              e.stopPropagation();
+              Navigate(`view?i=${row.original?._id}`);
+            }}
+            className="chip-warning-light"
+            sx={{ fontSize: "14px" }}
+          >
+            <FaEye sx={{ fontSize: "16px" }} />
+          </IconButton>
           <IconButton
             onClick={(e) => {
               e.stopPropagation();

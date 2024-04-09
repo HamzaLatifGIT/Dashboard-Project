@@ -3,7 +3,7 @@ import AuthTokenGen from "Utils/AuthTokenGen"
 
 
 
-const CreateUserAPI = async (data) => {
+const CreateCategoryAPI = async (data) => {
     let resolved = {
         error: null,
         data: null
@@ -11,7 +11,7 @@ const CreateUserAPI = async (data) => {
 
     try {
         let res = await axios({
-            url: "/user",
+            url: "/category",
             method: "POST",
             data,
             headers: AuthTokenGen()
@@ -27,7 +27,7 @@ const CreateUserAPI = async (data) => {
     return resolved;
 }
 
-const GetUserAPI = async (type) => {
+const GetCategoriesAPI = async (type) => {
     let resolved = {
         error: null,
         data: null
@@ -35,30 +35,7 @@ const GetUserAPI = async (type) => {
 
     try {
         let res = await axios({
-            url: type ? `/user/all/?type=${type}` : `/user/all`,
-            method: "GET",
-            headers: AuthTokenGen()
-        })
-        resolved.data = res.data
-    } catch (err) {
-        if (err && err.response && err?.response?.data?.message) {
-            resolved.error = err.response.data.message
-        } else {
-            resolved.error = "Something went Wrong"
-        }
-    }
-    return resolved;
-}
-
-const GetSpecifucUserAPI = async (type, id) => {
-    let resolved = {
-        error: null,
-        data: null
-    }
-
-    try {
-        let res = await axios({
-            url: type ? `/user/${id}/?type=${type}` : `/user/${id}`,
+            url: type ? `/category/all/?type=${type}` : `/category`,
             method: "GET",
             headers: AuthTokenGen()
         })
@@ -74,4 +51,4 @@ const GetSpecifucUserAPI = async (type, id) => {
 }
 
 
-export { CreateUserAPI, GetUserAPI , GetSpecifucUserAPI }
+export { CreateCategoryAPI, GetCategoriesAPI }

@@ -16,7 +16,7 @@ const style = {
     boxShadow: 24,
     p: 4,
 };
-const CustomModal = ({ name, children }) => {
+const CustomModal = ({ name, type = "button", children }) => {
     const [open, setOpen] = React.useState(false);
 
     const toggleModal = () => {
@@ -25,7 +25,12 @@ const CustomModal = ({ name, children }) => {
 
     return (
         <>
-            <Button variant='contained' onClick={toggleModal}>{name}</Button>
+            {
+                type == "text" ?
+                    <p onClick={toggleModal}>{name}</p>
+                    :
+                    <Button variant='contained' onClick={toggleModal}>{name}</Button>
+            }
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
