@@ -15,7 +15,7 @@ import Modal from 'Components/Modal';
 // Helpers :
 import { createColumnHelper } from "@tanstack/react-table";
 import AddSellerForm from './AddProductForm';
-import { GetUserAPI } from 'API/User';
+import { GetProductsAPI } from 'API/Product';
 import { toast } from 'react-toastify';
 
 
@@ -54,7 +54,7 @@ const Index = () => {
           fontSize={"14px"}
           sx={{ fontWeight: "500", color: "secondary.text" }}
         >
-          {info.row.original.category}
+          {info.row.original.category?.title || info.row.original.category}
         </Typography>
       ),
     }),
@@ -79,7 +79,7 @@ const Index = () => {
               fontSize={"14px"}
               sx={{ fontWeight: "500", color: "secondary.text" }}
             >
-              {info.row.original?.purchases || 0}
+              {info.row.original?.Purchases || 0}
             </Typography>
           </Box>
         </Box>
@@ -106,7 +106,7 @@ const Index = () => {
               fontSize={"14px"}
               sx={{ fontWeight: "500", color: "secondary.text" }}
             >
-              {info.row.original?.sales || 0}
+              {info.row.original?.Sells || 0}
             </Typography>
           </Box>
         </Box>
@@ -120,7 +120,7 @@ const Index = () => {
             fontSize={"14px"}
             sx={{ fontWeight: "500", color: "secondary.text" }}
           >
-            {info.row.original?.quantity || 0}
+            {info.row.original?.AvailableQuantity || 0}
           </Typography>
         </Box>
       ),
@@ -154,12 +154,30 @@ const Index = () => {
 
   const gettingProducts = async () => {
     setLoading(true)
-    let res = await GetUserAPI()
+    let res = await GetProductsAPI()
     if (res.error != null) {
       toast.error(res?.error)
     } else {
       toast.success(res.data?.message)
-      setAllProducts(res.data?.result)
+      // setAllProducts(res.data?.result)
+      let ProductData = res.data?.result || []
+      let AllProducts = ProductData?.map(data => {
+        let Purchases = 0;
+        let Sells = 0;
+        let AvailableQuantity = 0;
+        let Process = data?.purchases.map(val => { (Purchases += val?.quantity) })
+        let Process2 = data?.sells.map(val => { (Sells += val?.quantity) })
+        AvailableQuantity = Purchases - Sells
+        Purchases = Purchases * data?.price
+        Sells = Sells * data?.price
+        return ({
+          ...data,
+          Purchases,
+          Sells,
+          AvailableQuantity
+        })
+      })
+      setAllProducts(AllProducts)
     }
     setLoading(false)
   }
@@ -171,7 +189,7 @@ const Index = () => {
     <>
       <PageWrapper>
         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "end" }}>
-          <Button variant='contained' onClick={() => Navigate("add")}> Add New Customer </Button>
+          <Button variant='contained' onClick={() => Navigate("add")}> Add New Product </Button>
         </Box>
         <Table
           isSerial={true}

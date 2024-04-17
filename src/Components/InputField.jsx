@@ -37,10 +37,10 @@ const InputField = ({ name, label, value, onChange, }) => {
         <>
             <Box>
                 <FormControl variant="standard" fullWidth>
-                    <InputLabel shrink htmlFor="custome-input" sx={{ fontSize: "1.2rem", fontWeight: 500 }}>
+                    <InputLabel shrink htmlFor={ name ?? "custome-input"} sx={{ fontSize: "1.2rem", fontWeight: 500 }}>
                         {label ?? ""} :
                     </InputLabel>
-                    <CustomInput id="custome-input" name={name} value={value} onChange={onChange} />
+                    <CustomInput id={ name ?? "custome-input"} name={name} value={value} onChange={onChange} />
                 </FormControl>
             </Box>
         </>

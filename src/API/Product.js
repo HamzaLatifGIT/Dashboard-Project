@@ -3,7 +3,8 @@ import AuthTokenGen from "Utils/AuthTokenGen"
 
 
 
-const CreateUserAPI = async (data) => {
+
+const GetProductsAPI = async (type) => {
     let resolved = {
         error: null,
         data: null
@@ -11,7 +12,29 @@ const CreateUserAPI = async (data) => {
 
     try {
         let res = await axios({
-            url: "/user",
+            url: type ? `/product/all/?type=${type}` : `/product`,
+            method: "GET",
+            headers: AuthTokenGen()
+        })
+        resolved.data = res.data
+    } catch (err) {
+        if (err && err.response && err?.response?.data?.message) {
+            resolved.error = err.response.data.message
+        } else {
+            resolved.error = "Something went Wrong"
+        }
+    }
+    return resolved;
+}
+const CreateProductAPI = async (data) => {
+    let resolved = {
+        error: null,
+        data: null
+    }
+
+    try {
+        let res = await axios({
+            url: "/product",
             method: "POST",
             data,
             headers: AuthTokenGen()
@@ -27,7 +50,8 @@ const CreateUserAPI = async (data) => {
     return resolved;
 }
 
-const GetUserAPI = async (type) => {
+
+const PurchaseProductAPI = async (data) => {
     let resolved = {
         error: null,
         data: null
@@ -35,8 +59,9 @@ const GetUserAPI = async (type) => {
 
     try {
         let res = await axios({
-            url: type ? `/user/all/?type=${type}` : `/user/all`,
-            method: "GET",
+            url: "/product/buy",
+            method: "POST",
+            data,
             headers: AuthTokenGen()
         })
         resolved.data = res.data
@@ -50,7 +75,7 @@ const GetUserAPI = async (type) => {
     return resolved;
 }
 
-const GetSpecifucUserAPI = async (type, id) => {
+const SellProductAPI = async (data) => {
     let resolved = {
         error: null,
         data: null
@@ -58,8 +83,9 @@ const GetSpecifucUserAPI = async (type, id) => {
 
     try {
         let res = await axios({
-            url: type ? `/user/${id}/?type=${type}` : `/user/${id}`,
-            method: "GET",
+            url: "/product/sell",
+            method: "POST",
+            data,
             headers: AuthTokenGen()
         })
         resolved.data = res.data
@@ -74,4 +100,4 @@ const GetSpecifucUserAPI = async (type, id) => {
 }
 
 
-export { CreateUserAPI, GetUserAPI , GetSpecifucUserAPI }
+export { CreateProductAPI, GetProductsAPI, PurchaseProductAPI, SellProductAPI }

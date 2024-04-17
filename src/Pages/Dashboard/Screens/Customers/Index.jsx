@@ -17,6 +17,7 @@ import { createColumnHelper } from "@tanstack/react-table";
 import AddSellerForm from './AddBuyerForm';
 import { GetUserAPI } from 'API/User';
 import { toast } from 'react-toastify';
+import { FaEye } from 'react-icons/fa';
 
 
 
@@ -102,6 +103,16 @@ const Index = () => {
       header: "Actions",
       cell: ({ row }) => (
         <Box sx={{ display: "flex", gap: ".5rem" }}>
+          <IconButton
+            onClick={(e) => {
+              e.stopPropagation();
+              Navigate(`view?i=${row.original?._id}`);
+            }}
+            className="chip-warning-light"
+            sx={{ fontSize: "14px" }}
+          >
+            <FaEye sx={{ fontSize: "16px" }} />
+          </IconButton>
           <IconButton
             onClick={(e) => {
               e.stopPropagation();

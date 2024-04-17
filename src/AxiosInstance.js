@@ -5,7 +5,7 @@ const baseURL = import.meta.env.VITE_APP_ENV == "development" ? import.meta.env.
 const Instance = axios.create({
     baseURL: `${baseURL}/api`
 });
-window.location.CustomURL = `${baseURL}/static`
+window.location.ImgPath = `${baseURL}/static`
 
 // Logout if no Token or Unauthenticated :
 Instance.interceptors.response.use(undefined, function x(err) {

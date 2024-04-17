@@ -33,27 +33,27 @@ const CustomSelectInput = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-const SelectField=(name,label,value,onChange)=> {
-    
+const SelectField = ({ name, label, value, options, onChange }) => {
+
     return (
         <Box>
-            <FormControl sx={{ m: 1 }} variant="standard" fullWidth>
-                <InputLabel htmlFor="customeselect-input"   sx={{ fontSize: "1.2rem", fontWeight: 500 }}>Select: </InputLabel>
-                
+            <FormControl variant='standard' fullWidth>
+                <InputLabel shrink={true} htmlFor={name ?? "customeselect-input"} sx={{ fontSize: "1.2rem", fontWeight: 500 }}> {label ?? ""}: </InputLabel>
                 <Select
-                    labelId="custome-input"
-                    id="custome-input"
+                    labelId={name ?? "customeselect-input"}
+                    id={name ?? "customeselect-input"}
                     value={value}
                     onChange={onChange}
+                    // notched={true}
                     name={name}
-                    input={<CustomSelectInput/>}
+                    input={<CustomSelectInput />}
                 >
                     <MenuItem value="">
                         <em>None</em>
                     </MenuItem>
-                    <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
+                    {
+                        options && Array.isArray(options) && options.map((value, key) => <MenuItem value={value?._id}>{value?.title}</MenuItem>)
+                    }
                 </Select>
             </FormControl>
 
