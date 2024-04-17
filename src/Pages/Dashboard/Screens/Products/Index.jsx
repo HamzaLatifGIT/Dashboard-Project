@@ -37,7 +37,6 @@ const Index = () => {
       cell: (info) => (
 
         <Box sx={{ display: "flex", flexFlow: "column" }}>
-          {console.log(info)}
           <Typography
             fontSize={"14px"}
             sx={{ fontWeight: "500", color: "secondary.text" }}

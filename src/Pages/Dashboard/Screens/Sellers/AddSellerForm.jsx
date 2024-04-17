@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 // MUI :
 import { Box, Button, Grid } from '@mui/material'
@@ -12,7 +12,7 @@ import PasswordField from 'Components/PasswordField'
 import UploadField from 'Components/UploadField'
 
 // APIs :
-import { CreateUserAPI } from 'API/User'
+import { CreateUserAPI, UpdateUserAPI } from 'API/User'
 // Helper :
 import { toast } from 'react-toastify'
 
@@ -22,7 +22,10 @@ import { toast } from 'react-toastify'
 
 
 const AddSellerForm = () => {
-    let Navigate = useNavigate()
+    let Navigate = useNavigate();
+    let Location = useLocation()
+
+    let UserData = Location.state?.UserData;
 
     const [formData, setFormData] = useState({
         firstName: "",
@@ -34,6 +37,7 @@ const AddSellerForm = () => {
         address: ""
     })
     const [file, setFile] = useState(null)
+    const [ImageURL, setImageURL] = useState(null)
     const [loading, setLoading] = useState(false)
 
 
@@ -55,7 +59,12 @@ const AddSellerForm = () => {
         Object.keys(formData).map(key => Payload.append(key, formData[key]))
         if (file) Payload.append("file", file)
 
-        let res = await CreateUserAPI(Payload)
+        let res;
+        if (UserData?._id) {
+            res = await UpdateUserAPI(UserData?._id, Payload)
+        } else {
+            res = await CreateUserAPI(Payload)
+        }
         if (res.error != null) {
             toast.error(res?.error);
         } else {
@@ -65,11 +74,30 @@ const AddSellerForm = () => {
         setLoading(false)
     }
 
+    useEffect(() => {
+        if (Location.pathname?.includes("/edit")) {
+            if (UserData) {
+                setFormData({
+                    firstName: UserData.firstName,
+                    lastName: UserData.lastName,
+                    email: UserData.email,
+                    // password: UserData.firstName,
+                    role: "seller",
+                    phoneNumber: UserData.phoneNumber,
+                    address: UserData.address
+                })
+                setImageURL(UserData?.profileImage)
+            } else {
+                Navigate(-1)
+            }
+        }
+    }, [UserData])
+
     return (
         <>
             <PageWrapper>
                 <Grid container spacing={2} component="form" onSubmit={handleSubmit} sx={{ maxWidth: { md: "80%" }, mx: "auto" }}>
-                    <Grid item xs={12} sm={12}> <UploadField name={"avater"} onChange={(file) => setFile(file)} /> </Grid>
+                    <Grid item xs={12} sm={12}> <UploadField name={"avater"} value={ImageURL} onChange={(file) => setFile(file)} /> </Grid>
                     <Grid item xs={12} sm={6}>
                         <InputField name={"firstName"} label={"First Name"} value={formData.firstName} onChange={enteringData} />
                     </Grid>
@@ -89,7 +117,7 @@ const AddSellerForm = () => {
                         <InputField name={"address"} label={"Address"} value={formData.address} onChange={enteringData} />
                     </Grid>
                     <Grid item xs={12} sm={12} sx={{ display: "fex", justifyContent: "center" }} >
-                        <LoadingButton label={"Save"} loading={loading} type="submit" />
+                        <LoadingButton label={UserData?._id ? "Edit" : "Save"} loading={loading} type="submit" />
                     </Grid>
                 </Grid>
             </PageWrapper>

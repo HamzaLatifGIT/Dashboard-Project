@@ -13,7 +13,7 @@ import { FaAngleRight } from "react-icons/fa6";
 const PageHeader = () => {
     let Location = useLocation()
     let Routes = Location.pathname.slice(1).split("/")
-    console.log(Location);
+    // console.log(Location);
     return (
         <>
             <Box sx={{ display: "flex", gap: ".7rem", alignItems: "center", fontSize: "1.5rem", fontWeight: "500", color: "secondary.text" }}>

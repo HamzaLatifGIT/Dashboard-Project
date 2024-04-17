@@ -41,6 +41,7 @@ const AddSellerForm = () => {
 
     const [formData, setFormData] = useState({
         product: "",
+        price: "",
         quantity: "",
         note: "",
         user: ID
@@ -64,7 +65,6 @@ const AddSellerForm = () => {
             cell: (info) => (
 
                 <Box sx={{ display: "flex", flexFlow: "column" }}>
-                    {console.log(info)}
                     <Typography
                         fontSize={"14px"}
                         sx={{ fontWeight: "500", color: "secondary.text" }}
@@ -159,11 +159,13 @@ const AddSellerForm = () => {
             setFormData({
                 product: "",
                 quantity: "",
+                price: "",
                 note: "",
                 user: ID
             })
+            gettingData()
         }
-        setLoading(false)
+        setSellLoading(false)
     }
 
     const gettingData = async () => {
@@ -217,7 +219,7 @@ const AddSellerForm = () => {
                             <Typography sx={{ fontSize: ".9rem", color: "secondary.text" }}> {userData?.address}  </Typography>
                         </Box>
                     </Box>
-                    <LoadingButton label={<> Edit </>} sx={{ width: "60px" }} />
+                    <LoadingButton label={<> Edit </>} sx={{ width: "60px" }} onClick={() => Navigate("/dashboard/customers/edit", { state: { UserData: userData } })} />
                 </Box>
 
                 <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
@@ -228,6 +230,9 @@ const AddSellerForm = () => {
                         <Grid container spacing={2} component="form" onSubmit={handleSubmit} sx={{ maxWidth: { md: "90%" }, mx: "auto" }}>
                             <Grid item xs={12} sm={12}>
                                 <SelectField name={"product"} label="Select Product" value={formData.product} onChange={enteringData} options={allproducts} />
+                            </Grid>
+                            <Grid item xs={12} sm={12}>
+                                <InputField name={"price"} label={"Price"} value={formData.price} onChange={enteringData} />
                             </Grid>
                             <Grid item xs={12} sm={12}>
                                 <InputField name={"quantity"} label={"Quantity"} value={formData.quantity} onChange={enteringData} />

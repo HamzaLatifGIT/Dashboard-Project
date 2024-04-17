@@ -41,6 +41,7 @@ const AddSellerForm = () => {
 
     const [formData, setFormData] = useState({
         product: "",
+        price: "",
         quantity: "",
         note: "",
         user: ID
@@ -64,7 +65,6 @@ const AddSellerForm = () => {
             cell: (info) => (
 
                 <Box sx={{ display: "flex", flexFlow: "column" }}>
-                    {console.log(info)}
                     <Typography
                         fontSize={"14px"}
                         sx={{ fontWeight: "500", color: "secondary.text" }}
@@ -159,11 +159,13 @@ const AddSellerForm = () => {
             setFormData({
                 product: "",
                 quantity: "",
+                price: "",
                 note: "",
                 user: ID
             })
+            gettingData()
         }
-        setLoading(false)
+        setPurchaseLoading(false)
     }
 
     const gettingData = async () => {
@@ -175,7 +177,7 @@ const AddSellerForm = () => {
             setUserData(res.data?.result)
             // setAllPurchasedProducts(res.data?.ProductData)
             let ProductData = res.data?.ProductData
-            let AllProducts = ProductData?.map( data => {
+            let AllProducts = ProductData?.map(data => {
                 let CurrentUserpurchase = data?.purchases?.filter(data => data?.UserData == res.data?.result?._id)
                 let Quantity = 0;
                 let Process = CurrentUserpurchase.map(val => { (Quantity += val?.quantity) })
@@ -217,7 +219,7 @@ const AddSellerForm = () => {
                             <Typography sx={{ fontSize: ".9rem", color: "secondary.text" }}> {userData?.address}  </Typography>
                         </Box>
                     </Box>
-                    <LoadingButton label={<> Edit </>} sx={{ width: "60px" }} />
+                    <LoadingButton label={<> Edit </>} sx={{ width: "60px" }} onClick={() => Navigate("/dashboard/sellers/edit", { state: { UserData: userData } })} />
                 </Box>
 
                 <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
@@ -230,13 +232,16 @@ const AddSellerForm = () => {
                                 <SelectField name={"product"} label="Select Product" value={formData.product} onChange={enteringData} options={allproducts} />
                             </Grid>
                             <Grid item xs={12} sm={12}>
+                                <InputField name={"price"} label={"Price"} value={formData.price} onChange={enteringData} />
+                            </Grid>
+                            <Grid item xs={12} sm={12}>
                                 <InputField name={"quantity"} label={"Quantity"} value={formData.quantity} onChange={enteringData} />
                             </Grid>
                             <Grid item xs={12} sm={12}>
                                 <InputField name={"note"} label={"Note"} value={formData.note} onChange={enteringData} />
                             </Grid>
                             <Grid item xs={12} sm={12} sx={{ display: "fex", justifyContent: "center" }} >
-                                <LoadingButton label={"Save"} loading={loading} type="submit" />
+                                <LoadingButton label={"Save"} loading={purchaseLoading} type="submit" />
                             </Grid>
                         </Grid>
                     </CustomModal>

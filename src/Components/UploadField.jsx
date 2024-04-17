@@ -6,6 +6,7 @@ import { Box, Typography } from '@mui/material'
 
 // ASSETS :
 import { IoMdAdd } from "react-icons/io";
+import GenrateImage from 'Utils/GenrateImage';
 
 
 
@@ -35,11 +36,11 @@ const UploadField = ({ name, label, value, onChange, }) => {
 
     useEffect(() => {
         if (value) {
-            setImageUrl(value)
+            setImageUrl(GenrateImage(value))
         } else {
             setImageUrl(null)
         }
-    }, [])
+    }, [value])
 
     return (
         <>

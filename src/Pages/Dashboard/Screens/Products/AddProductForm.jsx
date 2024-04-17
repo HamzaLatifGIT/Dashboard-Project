@@ -35,7 +35,7 @@ const AddBuyerForm = () => {
     const [formData, setFormData] = useState({
         title: "",
         details: "",
-        price: "",
+        // price: "",
         category: "",
     })
     const [file, setFile] = useState(null)
@@ -45,7 +45,6 @@ const AddBuyerForm = () => {
 
     const enteringData = (event) => {
         let { name, value } = event.target;
-        console.log(name , value);
 
         setFormData({
             ...formData,
@@ -112,12 +111,6 @@ const AddBuyerForm = () => {
                     <Grid item xs={12} sm={6}>
                         <InputField name={"title"} label={"Title"} value={formData.title} onChange={enteringData} />
                     </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <InputField name={"price"} label={"Price"} value={formData.price} onChange={enteringData} />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <InputField name={"details"} label={"Details"} value={formData.details} onChange={enteringData} />
-                    </Grid>
                     <Grid item xs={12} sm={6} sx={{ position: "relative" }}>
                         <SelectField name={"category"} label="Category" value={formData.category} onChange={enteringData} options={allCategories} />
                         <Box sx={{ position: "absolute", right: "0", bottom: "-20px", "& p": { fontSize: ".8rem", color: "primary.field", cursor: "pointer" } }}> <CustomeModal name="Add Category" type='text' sx={{ maxWidth: { md: "800px" }, minWidth: { md: "500px" } }}  >
@@ -135,6 +128,13 @@ const AddBuyerForm = () => {
                             </Grid>
                         </CustomeModal> </Box>
                     </Grid>
+                    {/* <Grid item xs={12} sm={6}>
+                        <InputField name={"price"} label={"Price"} value={formData.price} onChange={enteringData} />
+                    </Grid> */}
+                    <Grid item xs={12} sm={12}>
+                        <InputField name={"details"} label={"Details"} value={formData.details} onChange={enteringData} />
+                    </Grid>
+
                     <Grid item xs={12} sm={12} sx={{ display: "fex", justifyContent: "center" }} >
                         <LoadingButton loading={loading} label={"Save"} type="submit" />
                     </Grid>
