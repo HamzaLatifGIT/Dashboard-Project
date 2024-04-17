@@ -17,7 +17,7 @@ const GenrateImage = (imageObj: Record<string, any>, varient: "profile" | "img" 
     let Location = imageObj?.storage
     let Path = window.location?.ImgPath
 
-    console.log("sadadasdasdasdasdasdsada" , Link ? Location == "local" ? `${Path}/${Link}` : Link : Image , [Path , Location]);
+    // console.log("sadadasdasdasdasdasdsada" , Link ? Location == "local" ? `${Path}/${Link}` : Link : Image , [Path , Location]);
     
     return Link ? Location == "local" ? `${Path}/${Link}` : Link : Image
 }

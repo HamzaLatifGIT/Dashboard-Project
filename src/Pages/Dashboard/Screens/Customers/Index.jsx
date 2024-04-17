@@ -38,7 +38,6 @@ const Index = () => {
       cell: (info) => (
 
         <Box sx={{ display: "flex", flexFlow: "column" }}>
-          {console.log(info)}
           <Typography
             fontSize={"14px"}
             sx={{ fontWeight: "500", color: "secondary.text" }}
@@ -116,7 +115,7 @@ const Index = () => {
           <IconButton
             onClick={(e) => {
               e.stopPropagation();
-              // navigate(`/clients/edit-client/${row.original.id}`);
+              Navigate(`edit`, { state: { UserData: row.original } });
             }}
             className="chip-warning-light"
             sx={{ fontSize: "14px" }}

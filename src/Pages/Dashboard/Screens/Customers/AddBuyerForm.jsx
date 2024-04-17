@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 // MUI :
 import { Box, Button, Grid } from '@mui/material'
@@ -13,7 +13,7 @@ import PasswordField from 'Components/PasswordField'
 import SelectField from 'Components/SelectField'
 
 // APIs :
-import { CreateUserAPI } from 'API/User'
+import { CreateUserAPI, UpdateUserAPI } from 'API/User'
 // Helper :
 import { toast } from 'react-toastify'
 
@@ -24,6 +24,11 @@ import { toast } from 'react-toastify'
 const AddBuyerForm = () => {
 
     let Navigate = useNavigate()
+    let Location = useLocation()
+
+    let UserData = Location.state?.UserData;
+
+    console.log("_____________________________" , UserData);
 
     const [formData, setFormData] = useState({
         firstName: "",
@@ -35,6 +40,7 @@ const AddBuyerForm = () => {
         address: ""
     })
     const [file, setFile] = useState(null)
+    const [ImageURL, setImageURL] = useState(null)
     const [loading, setLoading] = useState(false)
 
 
@@ -56,7 +62,12 @@ const AddBuyerForm = () => {
         Object.keys(formData).map(key => Payload.append(key, formData[key]))
         if (file) Payload.append("file", file)
 
-        let res = await CreateUserAPI(Payload)
+        let res;
+        if (UserData?._id) {
+            res = await UpdateUserAPI(UserData?._id, Payload)
+        } else {
+            res = await CreateUserAPI(Payload)
+        }
         if (res.error != null) {
             toast.error(res?.error);
         } else {
@@ -66,11 +77,30 @@ const AddBuyerForm = () => {
         setLoading(false)
     }
 
+    useEffect(() => {
+        if (Location.pathname?.includes("/edit")) {
+            if (UserData) {
+                setFormData({
+                    firstName: UserData.firstName,
+                    lastName: UserData.lastName,
+                    email: UserData.email,
+                    // password: UserData.firstName,
+                    role: "buyer",
+                    phoneNumber: UserData.phoneNumber,
+                    address: UserData.address
+                })
+                setImageURL(UserData?.profileImage)
+            } else {
+                Navigate(-1)
+            }
+        }
+    }, [UserData])
+
     return (
         <>
             <PageWrapper>
                 <Grid container spacing={2} component="form" onSubmit={handleSubmit} sx={{ maxWidth: { md: "80%" }, mx: "auto" }}>
-                    <Grid item xs={12} sm={12}> <UploadField name={"avater"} onChange={(file) => setFile(file)} /> </Grid>
+                    <Grid item xs={12} sm={12}> <UploadField name={"avater"} value={ImageURL} onChange={(file) => setFile(file)} /> </Grid>
                     <Grid item xs={12} sm={6}>
                         <InputField name={"firstName"} label={"First Name"} value={formData.firstName} onChange={enteringData} />
                     </Grid>
@@ -90,11 +120,8 @@ const AddBuyerForm = () => {
                         <InputField name={"address"} label={"Address"} value={formData.address} onChange={enteringData} />
                     </Grid>
 
-                    <Grid item xs={12} sm={6}>
-                        <SelectField name={"address"} label={"Select"} value={formData.Select} onChange={enteringData} />
-                    </Grid>
                     <Grid item xs={12} sm={12} sx={{ display: "fex", justifyContent: "center" }} >
-                        <LoadingButton loading={loading} label={"Save"} type="submit" />
+                        <LoadingButton loading={loading} label={UserData?._id ? "Edit" : "Save"} type="submit" />
                     </Grid>
                 </Grid>
             </PageWrapper>

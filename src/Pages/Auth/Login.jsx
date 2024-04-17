@@ -49,7 +49,7 @@ function Login() {
         } else {
             toast.success(res.data.message)
             let UserData = res.data?.result
-            localStorage.setItem("crmToken" , UserData?.token)
+            localStorage.setItem("crmToken", UserData?.token)
             Navigate("/dashboard")
         }
 
@@ -65,7 +65,7 @@ function Login() {
                 justifyContent="center"
                 // align='center'
                 sx={{ minHeight: '100vh', backgroundColor: "secondary.field" }} >
-                <Paper elevation={1} sx={{ padding: 5, height: '70vh', width: 400, margin: "20px auto", borderRadius: "8px", boxShadow: (theme) => `0px 0px 15px ${theme.palette.primary.shadow}` }}>
+                <Paper elevation={1} sx={{ padding: 6, width: 400, margin: "20px auto", borderRadius: "8px", boxShadow: (theme) => `0px 0px 15px ${theme.palette.primary.shadow}` }}>
                     <Grid sx={{ marginBottom: 5 }}><Typography variant='h3' textAlign={'center'}>Sign In</Typography ></Grid>
                     <Box sx={{ marginBottom: 1 }} >
                         {/* <Typography sx={{ my: 0.8 }}>Username</Typography> */}
@@ -74,9 +74,9 @@ function Login() {
                         </FormControl> */}
                         <InputField name={"email"} label={"Email"} value={formData.email} onChange={handleChange} />
                     </Box>
-              
 
-                    <PasswordField name={"password"} value={formData.password} label={"Password"} onChange={handleChange}   />
+
+                    <PasswordField name={"password"} value={formData.password} label={"Password"} onChange={handleChange} />
 
 
                     <br />
@@ -86,7 +86,7 @@ function Login() {
                             Forgot password ?
                         </Link>
                     </Typography> */}
-                    <Typography > Do you have an account ?
+                    <Typography sx={{ my: "1rem" }} > Do you have an account ?
                         <Link to="/signup" >
                             Sign Up
                         </Link>
