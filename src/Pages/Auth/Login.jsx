@@ -50,7 +50,7 @@ function Login() {
             toast.success(res.data.message)
             let UserData = res.data?.result
             localStorage.setItem("crmToken", UserData?.token)
-            Navigate("/dashboard")
+            window.location.href="/dashboard"
         }
 
         setloading(false)
