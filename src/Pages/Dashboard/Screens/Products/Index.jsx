@@ -162,17 +162,19 @@ const Index = () => {
       let ProductData = res.data?.result || []
       let AllProducts = ProductData?.map(data => {
         let Purchases = 0;
+        let TotalPurchases = 0;
         let Sells = 0;
+        let TotalSells = 0;
         let AvailableQuantity = 0;
-        let Process = data?.purchases.map(val => { (Purchases += val?.quantity) })
-        let Process2 = data?.sells.map(val => { (Sells += val?.quantity) })
+        let Process = data?.purchases.map(val => { Purchases += val?.quantity; TotalPurchases += (Number(val?.quantity) * Number(val?.price)); })
+        let Process2 = data?.sells.map(val => { Sells += val?.quantity; TotalSells += (Number(val?.quantity) * Number(val?.price)); })
         AvailableQuantity = Purchases - Sells
-        Purchases = Purchases * data?.price
-        Sells = Sells * data?.price
+        // Purchases = Purchases * data?.price
+        // Sells = Sells * data?.price
         return ({
           ...data,
-          Purchases,
-          Sells,
+          Purchases : TotalPurchases,
+          Sells : TotalSells,
           AvailableQuantity
         })
       })
