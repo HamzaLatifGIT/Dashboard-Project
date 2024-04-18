@@ -86,11 +86,11 @@ function Login() {
                             Forgot password ?
                         </Link>
                     </Typography> */}
-                    <Typography sx={{ my: "1rem" }} > Do you have an account ?
+                    {/* <Typography sx={{ my: "1rem" }} > Do you have an account ?
                         <Link to="/signup" >
                             Sign Up
                         </Link>
-                    </Typography>
+                    </Typography> */}
 
                 </Paper>
             </Grid></form>
