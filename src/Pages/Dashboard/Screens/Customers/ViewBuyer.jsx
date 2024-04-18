@@ -85,6 +85,17 @@ const AddSellerForm = () => {
                 </Typography>
             ),
         }),
+        columnHelper.accessor("Price", {
+            header: "Price",
+            cell: (info) => (
+                <Typography
+                    fontSize={"14px"}
+                    sx={{ fontWeight: "500", color: "secondary.text" }}
+                >
+                    {info.row.original?.Price || 0}
+                </Typography>
+            ),
+        }),
         columnHelper.accessor("Quantity", {
             header: "Quantity",
             cell: (info) => {
@@ -180,10 +191,12 @@ const AddSellerForm = () => {
             let AllProducts = ProductData?.map(data => {
                 let CurrentUserpurchase = data?.sells?.filter(data => data?.UserData == res.data?.result?._id)
                 let Quantity = 0;
-                let Process = CurrentUserpurchase.map(val => { (Quantity += val?.quantity) })
+                let Price = 0;
+                let Process = CurrentUserpurchase.map(val => { Quantity += val?.quantity; Price += (val?.price * val?.quantity); })
                 return ({
                     ...data,
-                    Quantity: Quantity
+                    Quantity: Quantity,
+                    Price
                 })
             })
             setAllSellProducts(AllProducts)
